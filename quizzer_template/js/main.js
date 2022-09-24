@@ -10,6 +10,7 @@ var awesomeQuiz = {
         })
     },
     showPanel:function(position){
+        console.log("clicked on quizzer");
         var current = $('div[data-panel="'+ (position - 1)+'"]');
         
         
@@ -24,11 +25,29 @@ var awesomeQuiz = {
     },
     showWrapper:function(next){
         var wrapper = next.find('.wrapper');
+       
 
         wrapper.fadeIn('500',function(){
-            ////
+          awesomeQuiz.showOptions(next)
         })
-    }
+    },
+    showOptions:function(next){
+        var options = next.find('.options');
+        var childrens = options.find('div');
+        var counter = 0;
+        childrens.each(function(index,element){
+           
+           $(element).delay(counter).fadeIn(300);
+           counter +=500;
+        });
+
+        childrens.on('click',function(){
+            
+            childrens.removeClass('active');
+            $(this).addClass('active');
+        })
+       
+    },
 }
 
 $(document).ready(function(){
