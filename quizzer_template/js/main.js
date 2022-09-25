@@ -1,5 +1,8 @@
 
 var awesomeQuiz = {
+    settings:{
+        results:[],
+    },
     loadQuiz:function(){
         $('.panel_one h1').show("drop",500,function(){
             $('.start_quiz').addClass("started",500)
@@ -38,6 +41,7 @@ var awesomeQuiz = {
             if(awesomeQuiz.validate_option($(this))){
                 var next = $(this).data('next');
                 awesomeQuiz.showPanel(next);
+                awesomeQuiz.showProgressAndStore(next);
 
             }
         })
@@ -54,6 +58,16 @@ var awesomeQuiz = {
             })
         }
 
+    },
+    showProgressAndStore: function(next){
+        $('.bar').animate({'width':'+=25%'});
+        var options =$('div[data-panel="'+(next -1)+'"]').find('.options');
+        options.find('div').each(function(index,el){
+            if($(this).hasClass('active')){
+                awesomeQuiz.settings.results.push($(this).text());
+                console.log(awesomeQuiz.settings.results);
+            }
+        })
     },
     showOptions:function(next){
         var options = next.find('.options');
