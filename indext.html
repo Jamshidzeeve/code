@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    var result = false
+    $(document).ready(function () {
+      
+
+      var user_id = 7;
+      var auth_access_token = "vakgfls1k5";
+      var order_id = 10 ;
+      
+      $('.clear').click(function () {
+      
+        $(".data_container").html("");
+      });
+      $('.get_cart_order').click(function(){
+        $.ajax({
+          url: "https://ccx-stage-backend.prosofo.com/api/v1/certificate/get/quote",
+          type: "post",
+          dataType:"text",
+          contentType:"plain/text",
+          data: JSON.stringify({ user_id: user_id, auth_access_token: auth_access_token }),
+          success: function (result) {
+            $(".data_container").html(result);
+          }
+        });
+      });
+
+      
+      $("#get_cart").click(function () {
+        
+        $.ajax({
+          url: "https://ccx-stage-backend.prosofo.com/api/v1/cart/details",
+          type: "post",
+          
+          data: { user_id: user_id, auth_access_token: auth_access_token, order_id: order_id },
+          success: function (result) {
+            $(".data_container").html(result);
+          }
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container center">
+    <div class="wrapper">
+      <div id="div1" class="row"><span class="data_container">CCX API</span></div>
+      <span class="btn btn-primary get_cart_order">Get Cart Order ID</span>
+      <span id="get_cart" class="btn btn-primary">Get Cart Detail</span>
+      <span class="btn btn-success clear">Clear Content</span>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
